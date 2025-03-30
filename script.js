@@ -89,44 +89,82 @@
 //     }, {});
 // }
 
-// 1. Filter the list of inventors for those who were born in the 1500s
-export function myfilter(inventors) {
-    return inventors.filter(i => i.year >= 1500 && i.year < 1600);
-}
+// // 1. Filter the list of inventors for those who were born in the 1500s
+// export function myfilter(inventors) {
+//     return inventors.filter(i => i.year >= 1500 && i.year < 1600);
+// }
 
-// 2. Give us an array of the inventor first and last names
-export function map(inventors) {
-    return inventors.map(i => `${i.first} ${i.last}`);
-}
+// // 2. Give us an array of the inventor first and last names
+// export function map(inventors) {
+//     return inventors.map(i => `${i.first} ${i.last}`);
+// }
 
-// 3. Sort the inventors by birthdate, oldest to youngest
-export function sort(inventors) {
-    return inventors.sort((a, b) => a.year - b.year);
-}
+// // 3. Sort the inventors by birthdate, oldest to youngest
+// export function sort(inventors) {
+//     return inventors.sort((a, b) => a.year - b.year);
+// }
 
-// 4. Return the total number of years all the inventors lived
-export function reduce(inventors) {
-    return inventors.reduce((acc, cur) => acc + (cur.passed - cur.year), 0);
-}
+// // 4. Return the total number of years all the inventors lived
+// export function reduce(inventors) {
+//     return inventors.reduce((acc, cur) => acc + (cur.passed - cur.year), 0);
+// }
 
-// 5. Sort the inventors by years lived
-export function sortbylived(inventors) {
-    return inventors.sort((a, b) => (b.passed - b.year) - (a.passed - a.year));
-}
+// // 5. Sort the inventors by years lived
+// export function sortbylived(inventors) {
+//     return inventors.sort((a, b) => (b.passed - b.year) - (a.passed - a.year));
+// }
 
-// 6. Sort the people alphabetically by last name
-export function sortByLastName(people) {
-    return people.sort((a, b) => {
-        const [aLast] = a.split(', ');
-        const [bLast] = b.split(', ');
-        return aLast.localeCompare(bLast);
+// // 6. Sort the people alphabetically by last name
+// export function sortByLastName(people) {
+//     return people.sort((a, b) => {
+//         const [aLast] = a.split(', ');
+//         const [bLast] = b.split(', ');
+//         return aLast.localeCompare(bLast);
+//     });
+// }
+
+// // 7. Reduce Exercise: Sum up the instances of each transport type
+// export function reducedSum() {
+//     return data.reduce((acc, transport) => {
+//         acc[transport] = (acc[transport] || 0) + 1;
+//         return acc;
+//     }, {});
+// }
+
+const solution = {
+  myfilter: function (inventors) {
+    return inventors.filter(inventor => inventor.year >= 1500 && inventor.year < 1600);
+  },
+  map: function (inventors) {
+    return inventors.map(inventor => `${inventor.first} ${inventor.last}`);
+  },
+  sort: function (inventors) {
+    return [...inventors].sort((a, b) => a.year - b.year);
+  },
+  reduce: function (inventors) {
+    return inventors.reduce((total, inventor) => total + (inventor.passed - inventor.year), 0);
+  },
+  sortbylived: function (inventors) {
+    return [...inventors].sort((a, b) => {
+      const lastInventor = a.passed - a.year;
+      const nextInventor = b.passed - b.year;
+      return nextInventor - lastInventor;
     });
-}
-
-// 7. Reduce Exercise: Sum up the instances of each transport type
-export function reducedSum() {
-    return data.reduce((acc, transport) => {
-        acc[transport] = (acc[transport] || 0) + 1;
-        return acc;
+  },
+  sortByLastName: function (people) {
+    return [...people].sort((lastOne, nextOne) => {
+      const [aLast] = lastOne.split(', ');
+      const [bLast] = nextOne.split(', ');
+      return aLast.localeCompare(bLast);
+    });
+  },
+  reducedSum: function (data) {
+    return data.reduce((obj, item) => {
+      if (!obj[item]) {
+        obj[item] = 0;
+      }
+      obj[item]++;
+      return obj;
     }, {});
-}
+  }
+};
